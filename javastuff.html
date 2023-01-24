@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="javascript.css" type="text/css">
+	<title>Magic Moving Box</title>
+  </head>
+  <body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<button style="background-color:black; border-color:white"onclick="pause()">
+	  <i class="material-icons" id="pause" style="color:white">pause</i>
+	</button>
+	  <center>
+	  <p style="color:#FFE5B4">
+		Points:
+	  </p>
+	<p id="points" style="color:#FFE5B4"> </p>
+	</center>
+	<script>
+	if (localStorage.getItem("points") === null) {
+    localStorage.setItem("points", 0);
+  }
+  document.getElementById("points").innerHTML = localStorage.getItem("points");
+
+
+	</script>
+
+
+
+<div id="box" style="background:pink;height:100px;width:100px;position:absolute;" class="center"></div>
+	<center>
+	  <div id="target" style="background:lavender;height:40px;width:40px;position:absolute;border-style:dashed;border-color:royalblue;border-width:10px">
+	  </div>
+	  </center>
+  </body>
+</html>
+<script>
+    function pause(){
+	  alert("the game is paused, you can close your computer if wanted, press ok to unpause.")
+	}
+
+  setInterval(function() {
+  checkCollision();
+  var div1 = document.getElementById("box");
+  var rect1 = div1.getBoundingClientRect();
+  var div2 = document.getElementById("target");
+  var rect2 = div2.getBoundingClientRect();
+  if (rect1.left < rect2.right && rect1.right > rect2.left && rect1.top < rect2.bottom && rect1.bottom > rect2.top){
+	function updatePoints() {
+    points++;
+    document.getElementById("points").innerHTML = points;
+  }
+    $("#target").fadeOut(function() {
+      var randomX = Math.floor(Math.random() * $(window).width());
+      var randomY = Math.floor(Math.random() * $(window).height());
+      $("#target").animate({left: randomX, top: randomY}, 1000);
+      $("#target").fadeIn();
+    });
+	updatePoints()
+  }
+}, 100);
+
+
+
+
+
+
+
+
+
+
+let x = 225;
+let y = 300;
+let points = 0;
+function checkCollision() {
+  var div1 = document.getElementById("box");
+  var rect1 = div1.getBoundingClientRect();
+  var div2 = document.getElementById("target");
+  var rect2 = div2.getBoundingClientRect();
+  if (rect1.left < rect2.right && rect1.right > rect2.left && rect1.top < rect2.bottom && rect1.bottom > rect2.top){
+	$("#target").fadeOut();
+
+
+  }
+}
+  setInterval(checkCollision, 1);
+  var div1 = document.getElementById("box");
+  var rect1 = div1.getBoundingClientRect();
+  var div2 = document.getElementById("target");
+  var rect2 = div2.getBoundingClientRect();
+  if (rect1.left < rect2.right && rect1.right > rect2.left && rect1.top < rect2.bottom && rect1.bottom > rect2.top){
+
+	var randomX = Math.floor(Math.random() * $(window).width());
+	var randomY = Math.floor(Math.random() * $(window).height());
+$("#target").animate({left: randomX, top: randomY}, 1000);
+	$("#target").show();
+  }
+
+
+
+
+
+
+
+
+
+$(document).keyup(function(e){
+  if(e.which == 38 && y > 0){
+	$("#box").animate({top: "-=200"}, 200, function(){y-=25});
+  }else if(e.which == 40 && y < 600){
+	$("#box").animate({top: "+=200"}, 200, function(){y+=25})
+  }else if(e.which == 37 && x > 0){
+	$("#box").animate({left: "-=200"},200, function(){x-=25})
+  }else if(e.which == 39 && x < 450){
+	$("#box").animate({left: "+=200"},200, function(){x+=25})
+  }else if(e.which == 87 && y > 0){
+	$("#box").animate({top: "-=200"}, 200, function(){y-=25})
+  }else if(e.which == 83 && y < 600){
+	$("#box").animate({top: "+=200"},200, function(){y+=25})
+  }else if(e.which == 68 && x > 0){
+	$("#box").animate({left: "+=200"},200, function(){x+=25})
+  }else if(e.which == 65 && x < 450){
+	$("#box").animate({left: "-=200"},200, function(){x+=25})
+  }else if(e.which == 32){
+	var randomX = Math.floor(Math.random() * $(window).width());
+	var randomY = Math.floor(Math.random() * $(window).height());
+	$("#box").animate({left: randomX, top: randomY}, 1001);
+  }
+})
+
+</script>
+
+
+<style media="screen">
+#box{
+  top:200px;
+  left:250px;
+}
+#target{
+  top: 400px;
+  left:450px;
+}
+body{
+  background-color:royalblue;
+}
+
+</style>
